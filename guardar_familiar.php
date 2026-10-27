@@ -1,11 +1,14 @@
 <?php
 require_once 'includes/db.php';
+require_once 'includes/flash.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nucleo_id = $_POST['nucleo_id'] ?? null;
-    
+
     if (!$nucleo_id) {
-        die("Error: Se requiere el ID del núcleo.");
+        flash_error_con_datos('Se requiere el núcleo familiar para poder guardar el familiar.', $_POST);
+        header('Location: index.php');
+        exit;
     }
 
     $boolean_fields = [
@@ -57,26 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $pdo->beginTransaction();
-        
-        try {
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute($data);
-        } catch (PDOException $e) {
-            // Self-healing: Si faltan las columnas de documentos, las agregamos
-            if (strpos($e->getMessage(), 'no column named Tiene_DPI') !== false) {
-                $pdo->rollBack();
-                $pdo->exec("ALTER TABLE Familiares ADD COLUMN Tiene_DPI INTEGER DEFAULT 0");
-                $pdo->exec("ALTER TABLE Familiares ADD COLUMN Tiene_Certificado_Nacimiento INTEGER DEFAULT 0");
-                $pdo->exec("ALTER TABLE Familiares ADD COLUMN Tiene_Pasaporte INTEGER DEFAULT 0");
-                
-                // Re-iniciar transacción y re-intentar
-                $pdo->beginTransaction();
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute($data);
-            } else {
-                throw $e;
-            }
-        }
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
 
         // Enfermedades pivot
         if (!empty($_POST['Enfermedades']) && is_array($_POST['Enfermedades'])) {
@@ -108,7 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } catch (PDOException $e) {
         if ($pdo->inTransaction()) $pdo->rollBack();
-        die("Error al guardar familiar: " . $e->getMessage());
+        flash_error_con_datos(mensaje_amigable($e), $_POST);
+        header('Location: crear_familiar.php?nucleo_id=' . urlencode($nucleo_id));
+        exit;
     }
 }
 ?>

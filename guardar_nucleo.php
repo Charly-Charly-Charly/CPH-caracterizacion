@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/db.php';
+require_once 'includes/flash.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fields = [
@@ -41,7 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: index.php');
         exit;
     } catch (PDOException $e) {
-        die("Error al guardar núcleo: " . $e->getMessage());
+        flash_error_con_datos(mensaje_amigable($e), $_POST);
+        header('Location: crear_nucleo.php');
+        exit;
     }
 }
 ?>

@@ -1,7 +1,9 @@
 <?php
-// preparar_nube.php - Configura el servidor MySQL online (Hostinger/phpMyAdmin)
-
+// preparar_nube.php - Crea/actualiza el esquema en el servidor MySQL online (Hostinger/phpMyAdmin)
+// Punto único de preparación de la nube (reemplaza a preparar_nube2.php, preparar_nube3.php
+// y migrar_columnas_mysql.php, que duplicaban esta misma lógica).
 require_once 'config.php';
+require_once 'includes/schema.php';
 
 echo "<h2>Preparando Base de Datos MySQL Online...</h2>";
 
@@ -10,13 +12,12 @@ try {
     $pdo_mysql = new PDO($dsn, MYSQL_USER, MYSQL_PASS);
     $pdo_mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "<p>✅ Conexión exitosa a " . MYSQL_HOST . "</p>";
+    echo "<p>✅ Conexión exitosa a " . htmlspecialchars(MYSQL_HOST) . "</p>";
 
-        $sql = "
-    -- Desactivar llaves foráneas para poder recrear tablas limpiamente
+    // 1. Esquema base: crea las tablas si todavía no existen en el servidor.
+    $sql = "
     SET FOREIGN_KEY_CHECKS = 0;
 
-    -- CATALOGOS
     CREATE TABLE IF NOT EXISTS Enfermedades (id VARCHAR(50) PRIMARY KEY, nombre VARCHAR(100), categoria VARCHAR(50), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP);
     CREATE TABLE IF NOT EXISTS Trabajos (id VARCHAR(50) PRIMARY KEY, nombre VARCHAR(100), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP);
     CREATE TABLE IF NOT EXISTS Fuentes_Ingreso (id VARCHAR(50) PRIMARY KEY, nombre VARCHAR(100), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP);
@@ -34,7 +35,6 @@ try {
     CREATE TABLE IF NOT EXISTS Arboles (id VARCHAR(50) PRIMARY KEY, nombre VARCHAR(100), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP);
     CREATE TABLE IF NOT EXISTS Actividades_Bosque (id VARCHAR(50) PRIMARY KEY, nombre VARCHAR(100), descripcion TEXT, sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP);
 
-    -- NUCLEO
     CREATE TABLE IF NOT EXISTS Nucleo (
         id VARCHAR(50) PRIMARY KEY,
         correlativo INT AUTO_INCREMENT UNIQUE,
@@ -44,12 +44,11 @@ try {
         Telefono VARCHAR(20), Persona_Beneficiaria_MC VARCHAR(100),
         Parentesco_MC VARCHAR(50), Afinidad_MC VARCHAR(50),
         Pertenencia_Cultural VARCHAR(50), Comunidad_Linguistica VARCHAR(50),
-        creado_por VARCHAR(50), 
+        creado_por VARCHAR(50),
         Desconoce_Fecha TINYINT DEFAULT 0, Edad INT,
         sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    -- FAMILIARES
     CREATE TABLE IF NOT EXISTS Familiares (
         id VARCHAR(50) PRIMARY KEY,
         nucleo_id VARCHAR(50),
@@ -68,7 +67,6 @@ try {
         FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE
     );
 
-    -- VIVIENDA
     CREATE TABLE IF NOT EXISTS Vivienda (
         id VARCHAR(50) PRIMARY KEY,
         nucleo_id VARCHAR(50), Cantidad_Ambientes INT,
@@ -78,10 +76,16 @@ try {
         FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE
     );
 
-    -- FALLECIDOS
-    CREATE TABLE IF NOT EXISTS Fallecidos (id VARCHAR(50) PRIMARY KEY, nucleo_id VARCHAR(50), Nombre VARCHAR(255), Sexo VARCHAR(20), Parentesco VARCHAR(50), Fecha_Nacimiento DATE, Fecha_Fallecimiento DATE, Causa_Fallecimiento VARCHAR(255), Lugar_Inhumacion VARCHAR(255), Desconoce_Fecha TINYINT DEFAULT 0, Edad INT, creado_por VARCHAR(50), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE);
+    CREATE TABLE IF NOT EXISTS Fallecidos (
+        id VARCHAR(50) PRIMARY KEY,
+        nucleo_id VARCHAR(50), Nombre VARCHAR(255), Sexo VARCHAR(20), Parentesco VARCHAR(50),
+        Fecha_Nacimiento DATE, Fecha_Fallecimiento DATE,
+        Causa_Fallecimiento VARCHAR(255), Lugar_Inhumacion VARCHAR(255), creado_por VARCHAR(50),
+        Desconoce_Fecha TINYINT DEFAULT 0, Edad INT,
+        sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE
+    );
 
-    -- CULTIVO ARBOLES
     CREATE TABLE IF NOT EXISTS Cultivo_Arboles (
         id VARCHAR(50) PRIMARY KEY,
         nucleo_id VARCHAR(50), tiene_cultivo TINYINT, creado_por VARCHAR(50),
@@ -89,7 +93,6 @@ try {
         FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE
     );
 
-    -- PIVOTS (RELACIONES)
     CREATE TABLE IF NOT EXISTS Familiar_Enfermedades (id VARCHAR(50) PRIMARY KEY, familiar_id VARCHAR(50), enfermedad_id VARCHAR(50), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (familiar_id) REFERENCES Familiares(id) ON DELETE CASCADE, FOREIGN KEY (enfermedad_id) REFERENCES Enfermedades(id) ON DELETE CASCADE);
     CREATE TABLE IF NOT EXISTS Familiar_Trabajos (id VARCHAR(50) PRIMARY KEY, familiar_id VARCHAR(50), trabajo_id VARCHAR(50), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (familiar_id) REFERENCES Familiares(id) ON DELETE CASCADE, FOREIGN KEY (trabajo_id) REFERENCES Trabajos(id) ON DELETE CASCADE);
     CREATE TABLE IF NOT EXISTS Familiar_Fuentes (id VARCHAR(50) PRIMARY KEY, familiar_id VARCHAR(50), fuente_id VARCHAR(50), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (familiar_id) REFERENCES Familiares(id) ON DELETE CASCADE, FOREIGN KEY (fuente_id) REFERENCES Fuentes_Ingreso(id) ON DELETE CASCADE);
@@ -108,65 +111,27 @@ try {
     CREATE TABLE IF NOT EXISTS Nucleo_Actividades_Bosque (id VARCHAR(50) PRIMARY KEY, nucleo_id VARCHAR(50), actividad_id VARCHAR(50), sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE, FOREIGN KEY (actividad_id) REFERENCES Actividades_Bosque(id) ON DELETE CASCADE);
 
     SET FOREIGN_KEY_CHECKS = 1;
-
-    -- MIGRACIONES DINÁMICAS (Añadir columnas si no existen en MySQL)
-    -- Nota: Usamos bloques individuales más adelante en el PHP para mayor seguridad.
     ";
 
-    $queries = explode(";", $sql);
-    foreach ($queries as $q) {
-        $q = trim($q);
-        if ($q) {
-            $pdo_mysql->exec($q);
+    foreach (explode(";", $sql) as $consulta) {
+        $consulta = trim($consulta);
+        if ($consulta) {
+            $pdo_mysql->exec($consulta);
         }
     }
 
-    // Listado de columnas que podrían faltar en la nube si las tablas ya existían
-        'Nucleo' => [
-            'Tercer_Nombre' => 'VARCHAR(100)',
-            'Desconoce_Fecha' => 'TINYINT DEFAULT 0',
-            'Edad' => 'INT'
-        ],
-        'Familiares' => [
-            'Doble_Nacionalidad' => 'TINYINT DEFAULT 0',
-            'Fuera_comunidad' => 'VARCHAR(100)',
-            'Donde_reside' => 'VARCHAR(100)',
-            'Tiene_DPI' => 'INT DEFAULT 0',
-            'Tiene_Certificado_Nacimiento' => 'INT DEFAULT 0',
-            'Tiene_Pasaporte' => 'INT DEFAULT 0',
-            'Desconoce_Fecha' => 'TINYINT DEFAULT 0',
-            'Edad' => 'INT'
-        ],
-        'Fallecidos' => [
-            'Desconoce_Fecha' => 'TINYINT DEFAULT 0',
-            'Edad' => 'INT',
-            'Parentesco' => 'VARCHAR(50)'
-        ],
-        'Nucleo_Ganado' => [
-            'es_personal' => 'TINYINT DEFAULT 0',
-            'es_comercial' => 'TINYINT DEFAULT 0'
-        ]
-    ];
+    echo "<p>✅ Tablas base verificadas/creadas.</p>";
 
-    foreach ($migraciones as $tabla => $cols) {
-        foreach ($cols as $col => $tipo) {
-            try {
-                $pdo_mysql->exec("ALTER TABLE $tabla ADD COLUMN $col $tipo");
-                echo "<li>✅ Columna '$col' añadida a $tabla en la nube.</li>";
-            } catch (PDOException $e) {
-                // Si el error es 'Duplicate column name', lo ignoramos
-                if ($e->getCode() == '42S21') {
-                    // Ya existe, todo bien
-                } else {
-                    echo "<li>⚠️ Aviso en $tabla.$col: " . $e->getMessage() . "</li>";
-                }
-            }
-        }
-    }    
+    // 2. Columnas evolutivas (las que se agregaron después de la versión inicial del esquema).
+    echo "<h3>Verificando columnas adicionales...</h3><ul>";
+    reparar_schema_mysql($pdo_mysql, function ($mensaje) {
+        echo "<li>" . htmlspecialchars($mensaje) . "</li>";
+    });
+    echo "</ul>";
 
-    echo "<p>✅ Tablas creadas con éxito.</p>";
+    echo "<p>✅ Preparación de la nube finalizada.</p>";
     echo "<p><a href='sincronizar_nube.php' style='padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;'>Ir al Sincronizador de Datos</a></p>";
-catch (PDOException $e) {
-    echo "<p style='color:red;'>❌ Error: " . $e->getMessage() . "</p>";
+} catch (PDOException $e) {
+    echo "<p style='color:red;'>❌ Error: " . htmlspecialchars($e->getMessage()) . "</p>";
 }
 ?>

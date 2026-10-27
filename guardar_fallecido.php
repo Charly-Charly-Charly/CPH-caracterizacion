@@ -1,11 +1,14 @@
 <?php
 require_once 'includes/db.php';
+require_once 'includes/flash.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nucleo_id = $_POST['nucleo_id'] ?? null;
-    
+
     if (!$nucleo_id) {
-        die("Error: Se requiere el ID del núcleo.");
+        flash_error_con_datos('Se requiere el núcleo familiar para poder guardar el fallecido.', $_POST);
+        header('Location: index.php');
+        exit;
     }
 
     $fields = [
@@ -41,7 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: ver_nucleo.php?id=" . urlencode($nucleo_id));
         exit;
     } catch (PDOException $e) {
-        die("Error al guardar fallecido: " . $e->getMessage());
+        flash_error_con_datos(mensaje_amigable($e), $_POST);
+        header('Location: crear_fallecido.php?nucleo_id=' . urlencode($nucleo_id));
+        exit;
     }
 }
 ?>

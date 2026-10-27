@@ -1,10 +1,13 @@
 <?php
 require_once 'includes/db.php';
+require_once 'includes/flash.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nucleo_id = $_POST['nucleo_id'] ?? null;
     if (!$nucleo_id) {
-        die("Error: Se requiere el ID del núcleo.");
+        flash_error_con_datos('Se requiere el núcleo familiar para poder guardar la vivienda.', $_POST);
+        header('Location: index.php');
+        exit;
     }
 
     $fields = ['Cantidad_Ambientes', 'Techo', 'Paredes', 'Suelo'];
@@ -66,7 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } catch (PDOException $e) {
         $pdo->rollBack();
-        die("Error al guardar vivienda: " . $e->getMessage());
+        flash_error_con_datos(mensaje_amigable($e), $_POST);
+        header('Location: crear_vivienda.php?nucleo_id=' . urlencode($nucleo_id));
+        exit;
     }
 }
 ?>

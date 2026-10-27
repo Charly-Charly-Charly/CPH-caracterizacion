@@ -1,3 +1,8 @@
+<?php
+$flash_error = $_SESSION['flash_error'] ?? null;
+$flash_datos = $_SESSION['flash_datos'] ?? null;
+unset($_SESSION['flash_error'], $_SESSION['flash_datos']);
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,4 +51,15 @@
             </div>
         </div>
     </nav>
+    <?php if ($flash_error): ?>
+    <div class="container mt-4">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><?= htmlspecialchars($flash_error) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+    </div>
+    <?php endif; ?>
+    <?php if ($flash_datos): ?>
+    <script>window.__datosFormulario = <?= json_encode($flash_datos) ?>;</script>
+    <?php endif; ?>
     <div class="container my-5">

@@ -1,10 +1,13 @@
 <?php
 require_once 'includes/db.php';
+require_once 'includes/flash.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nucleo_id = $_POST['nucleo_id'] ?? null;
     if (!$nucleo_id) {
-        die("Error: Se requiere el ID del núcleo.");
+        flash_error_con_datos('Se requiere el núcleo familiar para poder guardar la producción.', $_POST);
+        header('Location: index.php');
+        exit;
     }
 
     try {
@@ -74,7 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } catch (PDOException $e) {
         $pdo->rollBack();
-        die("Error al guardar producción: " . $e->getMessage());
+        flash_error_con_datos(mensaje_amigable($e), $_POST);
+        header('Location: produccion_nucleo.php?nucleo_id=' . urlencode($nucleo_id));
+        exit;
     }
 }
 ?>
