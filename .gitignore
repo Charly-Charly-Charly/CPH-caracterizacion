@@ -1,0 +1,10 @@
+# Variables de entorno (contiene contraseñas, no subir)
+.env
+
+# Bases de datos locales (contienen datos reales de personas)
+database.sqlite
+database_backup_*.sqlite
+temp_merge_*.sqlite
+
+# Carpeta de scripts temporales
+scratch/
