@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $redirect = $_POST['redirect'] ?? 'index.php';
 
-    if (AUTH_PASS !== '' && hash_equals(AUTH_USER, $usuario) && hash_equals(AUTH_PASS, $password)) {
+    if (AUTH_PASS_HASH !== '' && hash_equals(AUTH_USER, $usuario) && password_verify($password, AUTH_PASS_HASH)) {
         $_SESSION['autenticado'] = true;
         $_SESSION['usuario'] = $usuario;
         header('Location: ' . $redirect);
@@ -36,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                 <?php endif; ?>
 
-                <?php if (AUTH_PASS === ''): ?>
+                <?php if (AUTH_PASS_HASH === ''): ?>
                     <div class="alert alert-warning">
-                        No hay contraseña configurada. Edita el archivo <code>.env</code> en esta PC y define <code>AUTH_PASS</code>.
+                        No hay contraseña configurada. Edita el archivo <code>.env</code> en esta PC y define <code>AUTH_PASS_HASH</code>.
                     </div>
                 <?php endif; ?>
 

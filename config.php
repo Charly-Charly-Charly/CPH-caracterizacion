@@ -17,9 +17,9 @@ define('MYSQL_USER', env('MYSQL_USER', ''));
 define('MYSQL_PASS', env('MYSQL_PASS', ''));
 define('MYSQL_NAME', env('MYSQL_NAME', ''));
 
-// Autenticación local de esta PC
+// Autenticación local de esta PC (AUTH_PASS_HASH es un hash de password_hash(), no la contraseña en texto plano)
 define('AUTH_USER', env('AUTH_USER', 'admin'));
-define('AUTH_PASS', env('AUTH_PASS', ''));
+define('AUTH_PASS_HASH', env('AUTH_PASS_HASH', ''));
 
 require_once __DIR__ . '/includes/auth.php';
 ?>
