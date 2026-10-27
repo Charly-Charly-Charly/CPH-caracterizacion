@@ -2,7 +2,7 @@
     
     <footer class="bg-light text-center py-4 mt-auto">
         <div class="container">
-            <p class="mb-0 text-muted">&copy; <?php echo date('Y'); ?> Sistema Laguna Larga. COPADEH.</p>
+            <p class="mb-0 text-muted">&copy; <?php echo date('Y'); ?> Sistema Caracterizaciones COPADEH.</p>
         </div>
     </footer>
 

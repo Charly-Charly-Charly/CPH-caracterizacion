@@ -23,14 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesión - Laguna Larga</title>
+    <title>Iniciar sesión - Caracterizaciones COPADEH</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
         <div class="card shadow-sm" style="max-width: 400px; width: 100%;">
             <div class="card-body p-4">
-                <h4 class="mb-3 text-center"><i class="bi bi-people-fill"></i> Sistema Laguna Larga</h4>
+                <h4 class="mb-3 text-center"><i class="bi bi-people-fill"></i> Sistema Caracterizaciones COPADEH</h4>
 
                 <?php if ($error): ?>
                     <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>

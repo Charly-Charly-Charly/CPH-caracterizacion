@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function exportarExcel() {
     const table = document.querySelector('#data-to-export table');
-    const wb = XLSX.utils.table_to_book(table, { sheet: "Censo Laguna Larga" });
+    const wb = XLSX.utils.table_to_book(table, { sheet: "Caracterizaciones COPADEH" });
     
     // Añadir una hoja de resumen también
     const summaryData = [
