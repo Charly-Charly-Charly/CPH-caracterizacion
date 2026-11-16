@@ -8,3 +8,6 @@ temp_merge_*.sqlite
 
 # Carpeta de scripts temporales
 scratch/
+
+# Base de datos del panel de admin (credenciales de MySQL por comisión, hashes de PCs)
+admin/admin.sqlite
