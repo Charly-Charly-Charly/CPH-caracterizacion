@@ -18,6 +18,7 @@ if (!$comision) {
 }
 
 $nombres = $_POST['nombre'] ?? [];
+$usuarios = $_POST['usuario'] ?? [];
 $passwords = $_POST['password'] ?? [];
 
 $stmt_count = $admin_pdo->prepare("SELECT COUNT(*) FROM Comision_PCs WHERE comision_id = ?");
@@ -29,8 +30,9 @@ $insert = $admin_pdo->prepare("INSERT INTO Comision_PCs (id, comision_id, nombre
 
 foreach ($nombres as $i => $nombre) {
     $nombre = trim($nombre);
+    $usuario = trim($usuarios[$i] ?? '');
     $password = trim($passwords[$i] ?? '');
-    if ($nombre === '' || $password === '') {
+    if ($nombre === '' || $usuario === '' || $password === '') {
         continue;
     }
 
@@ -42,13 +44,13 @@ foreach ($nombres as $i => $nombre) {
         $comision_id,
         $nombre,
         $pc_id,
-        'admin',
+        $usuario,
         password_hash($password, PASSWORD_DEFAULT),
     ]);
 
-    $creadas[] = ['nombre' => $nombre, 'pc_id' => $pc_id, 'auth_user' => 'admin', 'password' => $password];
+    $creadas[] = ['nombre' => $nombre, 'pc_id' => $pc_id, 'auth_user' => $usuario, 'password' => $password];
 }
 
-$_SESSION['flash_credenciales'] = $creadas;
+$_SESSION['flash_credenciales'] = ['comision_id' => $comision_id, 'pcs' => $creadas];
 header('Location: comision.php?id=' . urlencode($comision_id));
 exit;

@@ -19,18 +19,28 @@ $siguiente_numero = count($pcs) + 1;
 
 // No se limpia aquí: se deja para que hoja_credenciales.php la lea una sola vez
 // (si el admin recarga esta página sin haber visto la hoja, todavía puede verla).
-$flash_credenciales = $_SESSION['flash_credenciales'] ?? null;
+// Solo se muestra si pertenece a ESTA comisión (evita que credenciales de otra
+// comisión, nunca vistas en la hoja imprimible, aparezcan aquí por error).
+$flash = $_SESSION['flash_credenciales'] ?? null;
+$flash_credenciales = ($flash && $flash['comision_id'] === $comision_id) ? $flash['pcs'] : null;
 
 $titulo = $comision['nombre'];
 require __DIR__ . '/includes/admin_header.php';
 ?>
 
 <p><a href="index.php">&larr; Comisiones</a></p>
-<h2 class="mb-1"><?= htmlspecialchars($comision['nombre']) ?></h2>
-<p class="text-muted">
-    Slug: <code><?= htmlspecialchars($comision['slug']) ?></code> &middot;
-    MySQL: <?= htmlspecialchars($comision['mysql_host']) ?> / <?= htmlspecialchars($comision['mysql_name']) ?>
-</p>
+<div class="d-flex justify-content-between align-items-start">
+    <div>
+        <h2 class="mb-1"><?= htmlspecialchars($comision['nombre']) ?></h2>
+        <p class="text-muted">
+            Slug: <code><?= htmlspecialchars($comision['slug']) ?></code> &middot;
+            MySQL: <?= htmlspecialchars($comision['mysql_host']) ?> / <?= htmlspecialchars($comision['mysql_name']) ?>
+        </p>
+    </div>
+    <a href="editar_comision.php?id=<?= urlencode($comision_id) ?>" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-pencil"></i> Editar comisión
+    </a>
+</div>
 
 <?php if ($flash_credenciales): ?>
 <div class="alert alert-success">
@@ -97,7 +107,7 @@ require __DIR__ . '/includes/admin_header.php';
         <form method="POST" action="guardar_pcs.php">
             <input type="hidden" name="comision_id" value="<?= htmlspecialchars($comision_id) ?>">
             <table class="table" id="tabla_pcs" style="display:none;">
-                <thead><tr><th>Nombre de la PC</th><th>Contraseña</th></tr></thead>
+                <thead><tr><th>Nombre de la PC</th><th>Usuario</th><th>Contraseña</th></tr></thead>
                 <tbody id="filas_pcs"></tbody>
             </table>
             <button type="submit" class="btn btn-success" id="btn_guardar" style="display:none;">
@@ -126,6 +136,7 @@ function generarFilas() {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td><input type="text" name="nombre[]" class="form-control" value="PC-${numero}" required></td>
+            <td><input type="text" name="usuario[]" class="form-control" value="usuario${numero}" required></td>
             <td><input type="text" name="password[]" class="form-control" value="${generarContrasenaAleatoria()}" required></td>
         `;
         filas.appendChild(tr);

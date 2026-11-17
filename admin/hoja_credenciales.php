@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/admin_auth.php';
 
-$credenciales = $_SESSION['flash_credenciales'] ?? [];
+$credenciales = $_SESSION['flash_credenciales']['pcs'] ?? [];
 unset($_SESSION['flash_credenciales']);
 ?>
 <!DOCTYPE html>
