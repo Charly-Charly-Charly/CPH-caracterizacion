@@ -2,7 +2,30 @@
 // admin/includes/zip_builder.php - Empaqueta el código del sistema + una base de datos
 // SQLite nueva (desde seed.sql) + el .env de una PC específica, listo para copiar a esa laptop.
 
+require_once __DIR__ . '/catalogos.php';
+
 define('PROYECTO_RAIZ', dirname(__DIR__, 2));
+
+// Sustituye, en la base $pdo_temp recién creada desde seed.sql, los catálogos
+// que esta comisión haya personalizado (admin.sqlite, tabla Comision_Catalogos).
+function zip_aplicar_catalogos_personalizados($pdo_temp, $comision_id) {
+    global $admin_pdo;
+    foreach (catalogos_definiciones() as $tabla => $def) {
+        $personalizados = catalogos_valores_personalizados($admin_pdo, $comision_id, $tabla);
+        if (empty($personalizados)) {
+            continue; // sin personalizar: se quedan los valores de seed.sql
+        }
+        $pdo_temp->exec("DELETE FROM $tabla");
+        $insert = $pdo_temp->prepare("INSERT INTO $tabla (id, nombre" . ($def['categoria'] ? ', categoria' : '') . ") VALUES (lower(hex(randomblob(16))), ?" . ($def['categoria'] ? ', ?' : '') . ")");
+        foreach ($personalizados as $valor) {
+            if ($def['categoria']) {
+                $insert->execute([$valor['nombre'], $valor['categoria']]);
+            } else {
+                $insert->execute([$valor['nombre']]);
+            }
+        }
+    }
+}
 
 // Rutas (relativas a la raíz del proyecto) que NUNCA deben ir dentro de un ZIP de campo.
 function zip_rutas_excluidas() {
@@ -80,6 +103,7 @@ function zip_construir_para_pc($comision, $pc, $zip_destino) {
     $pdo_temp = new PDO("sqlite:" . $db_temp);
     $pdo_temp->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo_temp->exec(file_get_contents(PROYECTO_RAIZ . '/seed.sql'));
+    zip_aplicar_catalogos_personalizados($pdo_temp, $comision['id']);
     unset($pdo_temp); // cierra la conexión para poder leer el archivo abajo
 
     $zip->addFile($db_temp, 'database.sqlite');

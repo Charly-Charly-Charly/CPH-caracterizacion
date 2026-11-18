@@ -22,7 +22,7 @@ $siguiente_numero = count($pcs) + 1;
 // Solo se muestra si pertenece a ESTA comisión (evita que credenciales de otra
 // comisión, nunca vistas en la hoja imprimible, aparezcan aquí por error).
 $flash = $_SESSION['flash_credenciales'] ?? null;
-$flash_credenciales = ($flash && $flash['comision_id'] === $comision_id) ? $flash['pcs'] : null;
+$flash_credenciales = (isset($flash['comision_id'], $flash['pcs']) && $flash['comision_id'] === $comision_id) ? $flash['pcs'] : null;
 
 $titulo = $comision['nombre'];
 require __DIR__ . '/includes/admin_header.php';
@@ -37,9 +37,14 @@ require __DIR__ . '/includes/admin_header.php';
             MySQL: <?= htmlspecialchars($comision['mysql_host']) ?> / <?= htmlspecialchars($comision['mysql_name']) ?>
         </p>
     </div>
-    <a href="editar_comision.php?id=<?= urlencode($comision_id) ?>" class="btn btn-sm btn-outline-secondary">
-        <i class="bi bi-pencil"></i> Editar comisión
-    </a>
+    <div>
+        <a href="catalogos.php?id=<?= urlencode($comision_id) ?>" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-list-check"></i> Campos colectivos
+        </a>
+        <a href="editar_comision.php?id=<?= urlencode($comision_id) ?>" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-pencil"></i> Editar comisión
+        </a>
+    </div>
 </div>
 
 <?php if ($flash_credenciales): ?>

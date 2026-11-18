@@ -35,6 +35,20 @@ try {
             );
         ");
     }
+
+    // CREATE TABLE IF NOT EXISTS (y no solo en $admin_needs_setup) para que una
+    // base admin.sqlite ya existente también obtenga esta tabla al migrarse.
+    $admin_pdo->exec("
+        CREATE TABLE IF NOT EXISTS Comision_Catalogos (
+            id TEXT PRIMARY KEY,
+            comision_id TEXT NOT NULL,
+            tabla TEXT NOT NULL,
+            nombre TEXT NOT NULL,
+            categoria TEXT,
+            orden INTEGER NOT NULL DEFAULT 0,
+            FOREIGN KEY (comision_id) REFERENCES Comisiones(id) ON DELETE CASCADE
+        );
+    ");
 } catch (PDOException $e) {
     die("No se pudo conectar a la base del panel de admin: " . $e->getMessage());
 }
