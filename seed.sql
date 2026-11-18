@@ -79,55 +79,85 @@ CREATE TABLE IF NOT EXISTS Fallecidos (
 INSERT INTO Enfermedades (id, nombre, categoria) VALUES
     (lower(hex(randomblob(16))), 'Gripe', 'COMUN'),
     (lower(hex(randomblob(16))), 'Gastritis', 'COMUN'),
-    (lower(hex(randomblob(16))), 'Infección Urinaria', 'COMUN'),
-    (lower(hex(randomblob(16))), 'Infección Vaginal', 'COMUN'),
     (lower(hex(randomblob(16))), 'Dengue', 'VIRAL'),
-    (lower(hex(randomblob(16))), 'Sarampion', 'VIRAL'),
-    (lower(hex(randomblob(16))), 'Viruela', 'VIRAL'),
     (lower(hex(randomblob(16))), 'Diabetes', 'CRONICA'),
     (lower(hex(randomblob(16))), 'Hipertensión', 'CRONICA'),
+    (lower(hex(randomblob(16))), 'Cancer', 'CRONICA'),
+    (lower(hex(randomblob(16))), 'Asma', 'CRONICA'),
+    (lower(hex(randomblob(16))), 'Artritis', 'CRONICA'),
+    (lower(hex(randomblob(16))), 'Desnutrición', 'TALLA_PESO'),
+    (lower(hex(randomblob(16))), 'Talla Baja', 'TALLA_PESO'),
+    (lower(hex(randomblob(16))), 'Diarrea Aguda', 'COMUN'),
+    (lower(hex(randomblob(16))), 'Colera', 'COMUN'),
+    (lower(hex(randomblob(16))), 'Chikunguya', 'VIRAL'),
+    (lower(hex(randomblob(16))), 'Envermedades Oculares', 'COMUN'),
+    (lower(hex(randomblob(16))), 'Paratosisis Intestinal', 'VIRAL'),
+    (lower(hex(randomblob(16))), 'Zika', 'VIRAL'),
+    (lower(hex(randomblob(16))), 'Paludismo', 'CRONICA'),
+    (lower(hex(randomblob(16))), 'Tifoidea', 'COMUN'),
+    (lower(hex(randomblob(16))), 'Infecciones respiratorias', 'VIRAL'),
+    (lower(hex(randomblob(16))), 'Hepatitis', 'COMUN'),
+    (lower(hex(randomblob(16))), 'Enfermedades de la piel', 'VIRAL'),
+    (lower(hex(randomblob(16))), 'Enfermedades de transmisión sexual', 'TRANSMISION'),
+    (lower(hex(randomblob(16))), 'Infección Urinaria', 'COMUN'),
     (lower(hex(randomblob(16))), 'Enfermedades Renales', 'CRONICA'),
-    (lower(hex(randomblob(16))), 'Enfermedades de transmisión sexual', 'TRANSMISION');
+    (lower(hex(randomblob(16))), 'Sarampion', 'VIRAL'),
+    (lower(hex(randomblob(16))), 'Viruela', 'VIRAL'),
+    (lower(hex(randomblob(16))), 'Infección Vaginal', 'COMUN');
 
 INSERT INTO Trabajos (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Agricultura'),
-    (lower(hex(randomblob(16))), 'Ganadería'),
+    (lower(hex(randomblob(16))), 'Jornalero'),
+    (lower(hex(randomblob(16))), 'Agente de Seguridad'),
+    (lower(hex(randomblob(16))), 'Albañileria'),
+    (lower(hex(randomblob(16))), 'Ganado'),
+    (lower(hex(randomblob(16))), 'Servicio Domestico'),
+    (lower(hex(randomblob(16))), 'Costurera'),
+    (lower(hex(randomblob(16))), 'Tejido'),
+    (lower(hex(randomblob(16))), 'Electrisista'),
+    (lower(hex(randomblob(16))), 'Carpintero'),
+    (lower(hex(randomblob(16))), 'Cuidador de Animales'),
+    (lower(hex(randomblob(16))), 'Bordadora'),
     (lower(hex(randomblob(16))), 'Comercio'),
-    (lower(hex(randomblob(16))), 'Albañilería'),
-    (lower(hex(randomblob(16))), 'Docencia'),
-    (lower(hex(randomblob(16))), 'Ama de casa');
+    (lower(hex(randomblob(16))), 'Agricultura'),
+    (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Fuentes_Ingreso (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Salario Diario'),
-    (lower(hex(randomblob(16))), 'Sueldo Mensual'),
     (lower(hex(randomblob(16))), 'Remesas'),
-    (lower(hex(randomblob(16))), 'Venta de Cosecha'),
-    (lower(hex(randomblob(16))), 'Negocio Propio');
+    (lower(hex(randomblob(16))), 'Jubilaciones'),
+    (lower(hex(randomblob(16))), 'Donaciones'),
+    (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Energia_Cocina (id, nombre) VALUES
     (lower(hex(randomblob(16))), 'Leña'),
     (lower(hex(randomblob(16))), 'Electricidad'),
     (lower(hex(randomblob(16))), 'Gas'),
+    (lower(hex(randomblob(16))), 'Carbon'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Alumbrado (id, nombre) VALUES
+    (lower(hex(randomblob(16))), 'Energia Electrica'),
+    (lower(hex(randomblob(16))), 'Gas Corriente'),
     (lower(hex(randomblob(16))), 'Panel Solar'),
-    (lower(hex(randomblob(16))), 'Red Eléctrica'),
-    (lower(hex(randomblob(16))), 'Candela'),
-    (lower(hex(randomblob(16))), 'Planta Eléctrica'),
+    (lower(hex(randomblob(16))), 'Generador a base de combustible'),
+    (lower(hex(randomblob(16))), 'Candelas / Velas Artesanales'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Agua_Hogar (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Pipa/Compra'),
-    (lower(hex(randomblob(16))), 'Río/Nacimiento'),
+    (lower(hex(randomblob(16))), 'Nacimiento de Agua'),
+    (lower(hex(randomblob(16))), 'Laguna'),
+    (lower(hex(randomblob(16))), 'Compra de Agua a otra Comunidad'),
     (lower(hex(randomblob(16))), 'Pozo Bombeado'),
     (lower(hex(randomblob(16))), 'Pozo Artesanal'),
-    (lower(hex(randomblob(16))), 'Captación Lluvia'),
+    (lower(hex(randomblob(16))), 'Aguada'),
+    (lower(hex(randomblob(16))), 'Captación de Agua de Lluvia'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Agua_Consumo (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Purificada'),
-    (lower(hex(randomblob(16))), 'Río/Nacimiento/Pozo'),
+    (lower(hex(randomblob(16))), 'Agua Embotellada'),
+    (lower(hex(randomblob(16))), 'Agua Filtrada'),
+    (lower(hex(randomblob(16))), 'Agua Hervida'),
+    (lower(hex(randomblob(16))), 'Agua Clorada'),
+    (lower(hex(randomblob(16))), 'Agua directa de un cuerpo de Agua'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Ubicacion_Animales (id, nombre) VALUES
@@ -141,23 +171,29 @@ INSERT INTO Ubicacion_Animales (id, nombre) VALUES
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Tipo_Sanitario (id, nombre) VALUES
+    (lower(hex(randomblob(16))), 'Pozo Ciego'),
+    (lower(hex(randomblob(16))), 'Letrina Abonera'),
+    (lower(hex(randomblob(16))), 'Sanitario de Losa con fosa septica'),
+    (lower(hex(randomblob(16))), 'Sin instalación / Aire Libre'),
     (lower(hex(randomblob(16))), 'Inodoro'),
-    (lower(hex(randomblob(16))), 'Letrina ciega'),
-    (lower(hex(randomblob(16))), 'Letrina lavable'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Aguas_Grises (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Desagüe al aire libre'),
-    (lower(hex(randomblob(16))), 'Pozo de absorción'),
-    (lower(hex(randomblob(16))), 'Río/Quebrada'),
+    (lower(hex(randomblob(16))), 'Drenaje'),
+    (lower(hex(randomblob(16))), 'Sumideros'),
+    (lower(hex(randomblob(16))), 'Desemboca a cuerpo de Agua'),
+    (lower(hex(randomblob(16))), 'Sin Instalación / Aire Libre'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Manejo_Basura (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Servicio de recolección'),
-    (lower(hex(randomblob(16))), 'Quema'),
-    (lower(hex(randomblob(16))), 'Entierra'),
-    (lower(hex(randomblob(16))), 'Tira a un barranco/río'),
-    (lower(hex(randomblob(16))), 'Abono/Compostaje'),
+    (lower(hex(randomblob(16))), 'Quema de Basura'),
+    (lower(hex(randomblob(16))), 'Enterrarla'),
+    (lower(hex(randomblob(16))), 'Vertedero'),
+    (lower(hex(randomblob(16))), 'Tira a un barranco'),
+    (lower(hex(randomblob(16))), 'Servicio Municipal o Privado'),
+    (lower(hex(randomblob(16))), 'La tira a un Cuerpo de Agua (Laguna)'),
+    (lower(hex(randomblob(16))), 'Reciclaje'),
+    (lower(hex(randomblob(16))), 'Composta'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Animales_Domesticos (id, nombre) VALUES
@@ -167,43 +203,61 @@ INSERT INTO Animales_Domesticos (id, nombre) VALUES
     (lower(hex(randomblob(16))), 'Conejos'),
     (lower(hex(randomblob(16))), 'Peces'),
     (lower(hex(randomblob(16))), 'Aves de corral menores'),
-    (lower(hex(randomblob(16))), 'Otro');
+    (lower(hex(randomblob(16))), 'Otro'),
+    (lower(hex(randomblob(16))), 'Perro'),
+    (lower(hex(randomblob(16))), 'Gato');
 
 INSERT INTO Ganado (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Bovino (Vacas/Toros)'),
-    (lower(hex(randomblob(16))), 'Porcino (Cerdos)'),
-    (lower(hex(randomblob(16))), 'Equino (Caballos/Mulas)'),
-    (lower(hex(randomblob(16))), 'Ovino (Ovejas)'),
-    (lower(hex(randomblob(16))), 'Caprino (Cabras)'),
-    (lower(hex(randomblob(16))), 'Avícola (Gallinas/Patos)'),
-    (lower(hex(randomblob(16))), 'Otro');
+    (lower(hex(randomblob(16))), 'Gallinas'),
+    (lower(hex(randomblob(16))), 'Gallos'),
+    (lower(hex(randomblob(16))), 'Patos'),
+    (lower(hex(randomblob(16))), 'Chompipe / Chuntos'),
+    (lower(hex(randomblob(16))), 'Vacas'),
+    (lower(hex(randomblob(16))), 'Caballos'),
+    (lower(hex(randomblob(16))), 'Toros'),
+    (lower(hex(randomblob(16))), 'Cabras'),
+    (lower(hex(randomblob(16))), 'Otros');
 
 INSERT INTO Cultivos (id, nombre) VALUES
-    (lower(hex(randomblob(16))), ' Maíz'),
+    (lower(hex(randomblob(16))), 'Maíz'),
     (lower(hex(randomblob(16))), 'Frijol'),
-    (lower(hex(randomblob(16))), 'Pepitoria'),
-    (lower(hex(randomblob(16))), 'Ajonjolí'),
-    (lower(hex(randomblob(16))), 'Tomate'),
-    (lower(hex(randomblob(16))), 'Café'),
+    (lower(hex(randomblob(16))), 'Limon'),
+    (lower(hex(randomblob(16))), 'Paterna'),
     (lower(hex(randomblob(16))), 'Cardamomo'),
-    (lower(hex(randomblob(16))), 'Hortalizas'),
-    (lower(hex(randomblob(16))), 'Frutales'),
+    (lower(hex(randomblob(16))), 'Chile'),
+    (lower(hex(randomblob(16))), 'Caxlut'),
+    (lower(hex(randomblob(16))), 'Café'),
+    (lower(hex(randomblob(16))), 'Cacao'),
+    (lower(hex(randomblob(16))), 'Achiote'),
+    (lower(hex(randomblob(16))), 'Papaya'),
+    (lower(hex(randomblob(16))), 'Jocote'),
+    (lower(hex(randomblob(16))), 'Tomate'),
+    (lower(hex(randomblob(16))), 'Camote'),
+    (lower(hex(randomblob(16))), 'Mania'),
+    (lower(hex(randomblob(16))), 'Nance'),
+    (lower(hex(randomblob(16))), 'Aguacate'),
+    (lower(hex(randomblob(16))), 'Ayote'),
+    (lower(hex(randomblob(16))), 'Arroz'),
+    (lower(hex(randomblob(16))), 'Ajonjoli'),
+    (lower(hex(randomblob(16))), 'Pepitoria / Chigua'),
+    (lower(hex(randomblob(16))), 'Yuca'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Arboles (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Cedro'),
-    (lower(hex(randomblob(16))), 'Caoba'),
     (lower(hex(randomblob(16))), 'Pino'),
-    (lower(hex(randomblob(16))), 'Ciprés'),
-    (lower(hex(randomblob(16))), 'Frutales (Naranja/Limón)'),
-    (lower(hex(randomblob(16))), 'Aguacate'),
+    (lower(hex(randomblob(16))), 'Teca'),
+    (lower(hex(randomblob(16))), 'Caoba'),
+    (lower(hex(randomblob(16))), 'Cedro'),
+    (lower(hex(randomblob(16))), 'Frutales'),
     (lower(hex(randomblob(16))), 'Otro');
 
 INSERT INTO Actividades_Bosque (id, nombre) VALUES
-    (lower(hex(randomblob(16))), 'Recolección de Leña'),
-    (lower(hex(randomblob(16))), 'Extracción de Madera'),
-    (lower(hex(randomblob(16))), 'Caza'),
-    (lower(hex(randomblob(16))), 'Crianza de animales silvestres'),
-    (lower(hex(randomblob(16))), 'Recolección de frutos silvestres'),
-    (lower(hex(randomblob(16))), 'Pesca en ríos/lagunas'),
-    (lower(hex(randomblob(16))), 'Otro');
+    (lower(hex(randomblob(16))), 'Cuidado contra incendios'),
+    (lower(hex(randomblob(16))), 'Vigilancia de la Zona'),
+    (lower(hex(randomblob(16))), 'Limpieza y mantenimiento'),
+    (lower(hex(randomblob(16))), 'Uso de medicina natural'),
+    (lower(hex(randomblob(16))), 'Ninguna Actividad'),
+    (lower(hex(randomblob(16))), 'Otro'),
+    (lower(hex(randomblob(16))), 'Venta de Madera'),
+    (lower(hex(randomblob(16))), 'Roza');
+
