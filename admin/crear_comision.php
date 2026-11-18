@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $stmt = $admin_pdo->prepare("INSERT INTO Comisiones (id, nombre, slug, mysql_host, mysql_user, mysql_pass, mysql_name) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$id, $nombre, $slug, $mysql_host, $mysql_user, $mysql_pass, $mysql_name]);
-            header('Location: comision.php?id=' . urlencode($id));
+            header('Location: crear_tablas_comision.php?id=' . urlencode($id) . '&recien_creada=1');
             exit;
         } catch (PDOException $e) {
             $error = (strpos($e->getMessage(), 'UNIQUE') !== false)

@@ -38,6 +38,9 @@ require __DIR__ . '/includes/admin_header.php';
         </p>
     </div>
     <div>
+        <a href="crear_tablas_comision.php?id=<?= urlencode($comision_id) ?>" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-database-add"></i> Crear/verificar base de datos
+        </a>
         <a href="catalogos.php?id=<?= urlencode($comision_id) ?>" class="btn btn-sm btn-outline-secondary">
             <i class="bi bi-list-check"></i> Campos colectivos
         </a>
