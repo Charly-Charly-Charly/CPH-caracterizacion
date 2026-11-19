@@ -1,8 +1,16 @@
+<?php
+// Fuerza que todos los enlaces/formularios relativos de esta página se resuelvan
+// contra la carpeta admin/, aunque el navegador haya entrado sin la barra final
+// (ej. http://host/admin en vez de http://host/admin/), que de otro modo hace
+// que un enlace como "comision.php" termine pidiendo "/comision.php".
+$admin_base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="<?= htmlspecialchars($admin_base) ?>">
     <title><?= isset($titulo) ? htmlspecialchars($titulo) . ' - ' : '' ?>Panel de Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
