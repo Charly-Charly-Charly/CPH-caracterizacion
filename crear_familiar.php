@@ -43,21 +43,6 @@ $fuentes = $pdo->query("SELECT * FROM Fuentes_Ingreso ORDER BY rowid")->fetchAll
                     <input type="text" name="Nombre" class="form-control" required>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Nacionalidad</label>
-                    <select name="Nacionalidad" class="form-select">
-                        <option value="">Seleccione...</option>
-                        <option value="Guatemalteco">Guatemalteco</option>
-                        <option value="Mexicano">Mexicano</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Tiene Doble Nacionalidad</label>
-                    <select name="Doble_Nacionalidad" class="form-select">
-                        <option value="0">No</option>
-                        <option value="1">Sí</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
                     <label class="form-label">Sexo</label>
                     <select name="Sexo" class="form-select">
                         <option value="">Seleccione...</option>
@@ -119,8 +104,7 @@ $fuentes = $pdo->query("SELECT * FROM Fuentes_Ingreso ORDER BY rowid")->fetchAll
                     <select name="Donde_reside" class="form-select">
                         <option value="">Seleccione...</option>
                         <option value="Comunidad">Comunidad</option>
-                        <option value="Petén">Petén</option>
-                        <option value="México">México</option>
+                        <option value="Ciudad">Ciudad</option>
                         <option value="Otro">Otro</option>
                     </select>
                 </div>
@@ -139,22 +123,16 @@ $fuentes = $pdo->query("SELECT * FROM Fuentes_Ingreso ORDER BY rowid")->fetchAll
 
             <h5 class="text-success mt-4 mb-3 pb-2 border-bottom">Documentos de Identificación</h5>
             <div class="row g-3 mb-4 align-items-center">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-check form-switch fs-5">
                         <input class="form-check-input" type="checkbox" role="switch" name="Tiene_DPI" id="Tiene_DPI" value="1">
                         <label class="form-check-label fs-6" for="Tiene_DPI">Tiene DPI</label>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-check form-switch fs-5">
                         <input class="form-check-input" type="checkbox" role="switch" name="Tiene_Certificado_Nacimiento" id="Tiene_Certificado_Nacimiento" value="1">
                         <label class="form-check-label fs-6" for="Tiene_Certificado_Nacimiento">Tiene Certificado de Nacimiento</label>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-check form-switch fs-5">
-                        <input class="form-check-input" type="checkbox" role="switch" name="Tiene_Pasaporte" id="Tiene_Pasaporte" value="1">
-                        <label class="form-check-label fs-6" for="Tiene_Pasaporte">Tiene Pasaporte</label>
                     </div>
                 </div>
             </div>

@@ -45,8 +45,6 @@ function columnas_evolutivas() {
         'Familiares' => [
             'Tiene_DPI'                    => ['sqlite' => 'INTEGER DEFAULT 0', 'mysql' => 'INT DEFAULT 0'],
             'Tiene_Certificado_Nacimiento' => ['sqlite' => 'INTEGER DEFAULT 0', 'mysql' => 'INT DEFAULT 0'],
-            'Tiene_Pasaporte'              => ['sqlite' => 'INTEGER DEFAULT 0', 'mysql' => 'INT DEFAULT 0'],
-            'Doble_Nacionalidad'           => ['sqlite' => 'INTEGER DEFAULT 0', 'mysql' => 'TINYINT DEFAULT 0'],
             'Fuera_comunidad'              => ['sqlite' => 'TEXT', 'mysql' => 'VARCHAR(100)'],
             'Donde_reside'                 => ['sqlite' => 'TEXT', 'mysql' => 'VARCHAR(100)'],
             'Desconoce_Fecha'              => ['sqlite' => 'INTEGER DEFAULT 0', 'mysql' => 'TINYINT DEFAULT 0'],
@@ -105,7 +103,7 @@ function crear_tablas_mysql($pdo_mysql, callable $log) {
     CREATE TABLE IF NOT EXISTS Familiares (
         id VARCHAR(50) PRIMARY KEY,
         nucleo_id VARCHAR(50),
-        Nombre VARCHAR(100), Nacionalidad VARCHAR(100), Parentesco VARCHAR(50),
+        Nombre VARCHAR(100), Parentesco VARCHAR(50),
         Afinidad VARCHAR(50), Estado_Civil VARCHAR(50), Fecha_Nacimiento DATE,
         Sexo VARCHAR(20), Embarazada TINYINT, Atencion_Prenatal TINYINT,
         Tipo_Atencion_Prenatal VARCHAR(50), Tiene_Discapacidad TINYINT,
@@ -113,8 +111,8 @@ function crear_tablas_mysql($pdo_mysql, callable $log) {
         Escolaridad VARCHAR(50), Estudia_Actualmente TINYINT, Razon_Abandono VARCHAR(100),
         Actualmente_Labora TINYINT, Ingresos_Mensuales DECIMAL(10,2),
         Viajan_Trabajo TINYINT, Tiempo_Viaje INT, creado_por VARCHAR(50),
-        Doble_Nacionalidad TINYINT DEFAULT 0, Fuera_comunidad VARCHAR(100), Donde_reside VARCHAR(100),
-        Tiene_DPI INT DEFAULT 0, Tiene_Certificado_Nacimiento INT DEFAULT 0, Tiene_Pasaporte INT DEFAULT 0,
+        Fuera_comunidad VARCHAR(100), Donde_reside VARCHAR(100),
+        Tiene_DPI INT DEFAULT 0, Tiene_Certificado_Nacimiento INT DEFAULT 0,
         Desconoce_Fecha TINYINT DEFAULT 0, Edad INT,
         sincronizado INT DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE

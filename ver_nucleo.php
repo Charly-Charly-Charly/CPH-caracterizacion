@@ -437,8 +437,6 @@ require_once 'includes/header.php';
       </div>
       <div class="modal-body">
         <div class="row g-3">
-            <div class="col-md-3"><strong>Nacionalidad:</strong> <br><?= htmlspecialchars($fam['Nacionalidad'] ?? '-') ?></div>
-            <div class="col-md-3"><strong>Tiene Doble Nacionalidad:</strong> <br><?= $fam['Doble_Nacionalidad'] ? 'Sí' : 'No' ?></div>
             <div class="col-md-3"><strong>Afinidad:</strong> <br><?= htmlspecialchars($fam['Afinidad'] ?? '-') ?></div>
             <div class="col-md-3"><strong>Fecha Nacimiento:</strong> <br><?= $fam['Desconoce_Fecha'] ? 'Desconocida' : htmlspecialchars($fam['Fecha_Nacimiento']) ?></div>
             <div class="col-md-3"><strong>Edad:</strong> <br><?= $fam['Desconoce_Fecha'] ? $fam['Edad'] . ' años (aprox.)' : calcularEdad($fam['Fecha_Nacimiento']) . ' años' ?></div>
@@ -454,9 +452,8 @@ require_once 'includes/header.php';
             <div class="col-md-3"><strong>Tiempo Fuera de la Comunidad:</strong> <br><?= htmlspecialchars($fam['Fuera_comunidad'] ?: '-') ?></div>
             
             <div class="col-12 mt-4"><h6 class="text-success border-bottom pb-2">Documentos de Identificación</h6></div>
-            <div class="col-md-4"><strong>DPI:</strong> <br><?= $fam['Tiene_DPI'] ? 'Sí' : 'No' ?></div>
-            <div class="col-md-4"><strong>Certificado Nacimiento:</strong> <br><?= $fam['Tiene_Certificado_Nacimiento'] ? 'Sí' : 'No' ?></div>
-            <div class="col-md-4"><strong>Pasaporte:</strong> <br><?= $fam['Tiene_Pasaporte'] ? 'Sí' : 'No' ?></div>
+            <div class="col-md-6"><strong>DPI:</strong> <br><?= $fam['Tiene_DPI'] ? 'Sí' : 'No' ?></div>
+            <div class="col-md-6"><strong>Certificado Nacimiento:</strong> <br><?= $fam['Tiene_Certificado_Nacimiento'] ? 'Sí' : 'No' ?></div>
 
             <div class="col-12 mt-4"><h6 class="text-success border-bottom pb-2">Salud y Enfermedades</h6></div>
             <div class="col-12">

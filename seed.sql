@@ -15,13 +15,13 @@ CREATE TABLE IF NOT EXISTS Nucleo (
 );
 
 CREATE TABLE IF NOT EXISTS Familiares (
-    id TEXT PRIMARY KEY, nucleo_id TEXT NOT NULL, Nombre TEXT NOT NULL, Nacionalidad TEXT,
+    id TEXT PRIMARY KEY, nucleo_id TEXT NOT NULL, Nombre TEXT NOT NULL,
     Parentesco TEXT, Afinidad TEXT, Estado_Civil TEXT, Fecha_Nacimiento TEXT, Sexo TEXT,
     Embarazada INTEGER, Atencion_Prenatal INTEGER, Tipo_Atencion_Prenatal TEXT,
     Tiene_Discapacidad INTEGER, Tipo_Discapacidad TEXT, Sabe_Leer INTEGER, Sabe_Escribir INTEGER,
     Escolaridad TEXT, Estudia_Actualmente INTEGER, Razon_Abandono TEXT, Actualmente_Labora INTEGER,
     Ingresos_Mensuales REAL, Viajan_Trabajo INTEGER, Tiempo_Viaje INTEGER, creado_por TEXT,
-    Tiene_DPI INTEGER DEFAULT 0, Tiene_Certificado_Nacimiento INTEGER DEFAULT 0, Tiene_Pasaporte INTEGER DEFAULT 0,
+    Tiene_DPI INTEGER DEFAULT 0, Tiene_Certificado_Nacimiento INTEGER DEFAULT 0,
     Desconoce_Fecha INTEGER DEFAULT 0, Edad INTEGER,
     sincronizado INTEGER DEFAULT 0, actualizado_el DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (nucleo_id) REFERENCES Nucleo(id) ON DELETE CASCADE

@@ -11,8 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Common fields
     $nombre = $_POST['Nombre'] ?? '';
-    $nacionalidad = $_POST['Nacionalidad'] ?? '';
-    $doble_nac = $_POST['Doble_Nacionalidad'] ?? 0;
     $sexo = $_POST['Sexo'] ?? '';
     $fecha_nac = $_POST['Fecha_Nacimiento'] ?? null;
     $desconoce_fecha = isset($_POST['Desconoce_Fecha']) ? 1 : 0;
@@ -25,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $tiene_dpi = isset($_POST['Tiene_DPI']) ? 1 : 0;
     $tiene_cert = isset($_POST['Tiene_Certificado_Nacimiento']) ? 1 : 0;
-    $tiene_pas = isset($_POST['Tiene_Pasaporte']) ? 1 : 0;
 
     $embarazada = $_POST['Embarazada'] ?? 0;
     $atencion_pre = $_POST['Atencion_Prenatal'] ?? 0;
@@ -55,30 +52,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->beginTransaction();
 
         // 1. Update primary table
-        $sql = "UPDATE Familiares SET 
-                Nombre = ?, Nacionalidad = ?, Doble_Nacionalidad = ?, Sexo = ?, 
-                Fecha_Nacimiento = ?, Desconoce_Fecha = ?, Edad = ?, 
-                Parentesco = ?, Afinidad = ?, Estado_Civil = ?, 
-                Donde_reside = ?, Fuera_comunidad = ?, 
-                Tiene_DPI = ?, Tiene_Certificado_Nacimiento = ?, Tiene_Pasaporte = ?,
-                Embarazada = ?, Atencion_Prenatal = ?, Tipo_Atencion_Prenatal = ?, 
-                Tiene_Discapacidad = ?, Tipo_Discapacidad = ?, 
-                Sabe_Leer = ?, Sabe_Escribir = ?, Estudia_Actualmente = ?, 
-                Escolaridad = ?, Razon_Abandono = ?, 
+        $sql = "UPDATE Familiares SET
+                Nombre = ?, Sexo = ?,
+                Fecha_Nacimiento = ?, Desconoce_Fecha = ?, Edad = ?,
+                Parentesco = ?, Afinidad = ?, Estado_Civil = ?,
+                Donde_reside = ?, Fuera_comunidad = ?,
+                Tiene_DPI = ?, Tiene_Certificado_Nacimiento = ?,
+                Embarazada = ?, Atencion_Prenatal = ?, Tipo_Atencion_Prenatal = ?,
+                Tiene_Discapacidad = ?, Tipo_Discapacidad = ?,
+                Sabe_Leer = ?, Sabe_Escribir = ?, Estudia_Actualmente = ?,
+                Escolaridad = ?, Razon_Abandono = ?,
                 Actualmente_Labora = ?, Viajan_Trabajo = ?, Ingresos_Mensuales = ?, Tiempo_Viaje = ?,
                 sincronizado = 0, actualizado_el = CURRENT_TIMESTAMP
                 WHERE id = ?";
-        
+
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            $nombre, $nacionalidad, $doble_nac, $sexo, 
-            $fecha_nac, $desconoce_fecha, $edad, 
-            $parentesco, $afinidad, $estado_civil, 
+            $nombre, $sexo,
+            $fecha_nac, $desconoce_fecha, $edad,
+            $parentesco, $afinidad, $estado_civil,
             $donde_reside, $fuera_comunidad,
-            $tiene_dpi, $tiene_cert, $tiene_pas,
-            $embarazada, $atencion_pre, $tipo_atencion, 
+            $tiene_dpi, $tiene_cert,
+            $embarazada, $atencion_pre, $tipo_atencion,
             $tiene_disc, $tipo_disc,
-            $sabe_leer, $sabe_escribir, $estudia, 
+            $sabe_leer, $sabe_escribir, $estudia,
             $escolaridad, $razon_abandono,
             $actualmente_labora, $viajan_trabajo, $ingresos, $tiempo_viaje,
             $id

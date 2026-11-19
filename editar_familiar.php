@@ -69,21 +69,6 @@ function inArrayChecked($val, $arr) { echo in_array($val, $arr) ? 'checked' : ''
                     <input type="text" name="Nombre" class="form-control" value="<?= htmlspecialchars($fam['Nombre']) ?>" required>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Nacionalidad</label>
-                    <select name="Nacionalidad" class="form-select">
-                        <option value="">Seleccione...</option>
-                        <option value="Guatemalteco" <?php isSelected('Guatemalteco', $fam['Nacionalidad']); ?>>Guatemalteco</option>
-                        <option value="Mexicano" <?php isSelected('Mexicano', $fam['Nacionalidad']); ?>>Mexicano</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Tiene Doble Nacionalidad</label>
-                    <select name="Doble_Nacionalidad" class="form-select">
-                        <option value="0" <?php isSelected('0', $fam['Doble_Nacionalidad']); ?>>No</option>
-                        <option value="1" <?php isSelected('1', $fam['Doble_Nacionalidad']); ?>>Sí</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
                     <label class="form-label">Sexo</label>
                     <select name="Sexo" class="form-select">
                         <option value="">Seleccione...</option>
@@ -141,8 +126,7 @@ function inArrayChecked($val, $arr) { echo in_array($val, $arr) ? 'checked' : ''
                     <select name="Donde_reside" class="form-select">
                         <option value="">Seleccione...</option>
                         <option value="Comunidad" <?php isSelected('Comunidad', $fam['Donde_reside']); ?>>Comunidad</option>
-                        <option value="Petén" <?php isSelected('Petén', $fam['Donde_reside']); ?>>Petén</option>
-                        <option value="México" <?php isSelected('México', $fam['Donde_reside']); ?>>México</option>
+                        <option value="Ciudad" <?php isSelected('Ciudad', $fam['Donde_reside']); ?>>Ciudad</option>
                         <option value="Otro" <?php isSelected('Otro', $fam['Donde_reside']); ?>>Otro</option>
                     </select>
                 </div>
@@ -161,22 +145,16 @@ function inArrayChecked($val, $arr) { echo in_array($val, $arr) ? 'checked' : ''
 
             <h5 class="text-success mt-4 mb-3 pb-2 border-bottom">Documentos de Identificación</h5>
             <div class="row g-3 mb-4 align-items-center">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-check form-switch fs-5">
                         <input class="form-check-input" type="checkbox" role="switch" name="Tiene_DPI" id="Tiene_DPI" value="1" <?php isChecked('1', $fam['Tiene_DPI']); ?>>
                         <label class="form-check-label fs-6" for="Tiene_DPI">Tiene DPI</label>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-check form-switch fs-5">
                         <input class="form-check-input" type="checkbox" role="switch" name="Tiene_Certificado_Nacimiento" id="Tiene_Certificado_Nacimiento" value="1" <?php isChecked('1', $fam['Tiene_Certificado_Nacimiento']); ?>>
                         <label class="form-check-label fs-6" for="Tiene_Certificado_Nacimiento">Tiene Certificado de Nacimiento</label>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-check form-switch fs-5">
-                        <input class="form-check-input" type="checkbox" role="switch" name="Tiene_Pasaporte" id="Tiene_Pasaporte" value="1" <?php isChecked('1', $fam['Tiene_Pasaporte']); ?>>
-                        <label class="form-check-label fs-6" for="Tiene_Pasaporte">Tiene Pasaporte</label>
                     </div>
                 </div>
             </div>

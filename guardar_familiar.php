@@ -13,15 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $boolean_fields = [
         'Sabe_Leer', 'Sabe_Escribir', 'Estudia_Actualmente', 'Actualmente_Labora', 'Viajan_Trabajo',
-        'Tiene_DPI', 'Tiene_Certificado_Nacimiento', 'Tiene_Pasaporte', 'Desconoce_Fecha'
+        'Tiene_DPI', 'Tiene_Certificado_Nacimiento', 'Desconoce_Fecha'
     ];
 
     $fields = [
-        'Nombre', 'Nacionalidad', 'Parentesco', 'Afinidad', 'Estado_Civil', 
-        'Fecha_Nacimiento', 'Sexo', 'Embarazada', 'Atencion_Prenatal', 
-        'Tipo_Atencion_Prenatal', 'Tiene_Discapacidad', 'Tipo_Discapacidad', 
+        'Nombre', 'Parentesco', 'Afinidad', 'Estado_Civil',
+        'Fecha_Nacimiento', 'Sexo', 'Embarazada', 'Atencion_Prenatal',
+        'Tipo_Atencion_Prenatal', 'Tiene_Discapacidad', 'Tipo_Discapacidad',
         'Escolaridad', 'Razon_Abandono', 'Ingresos_Mensuales', 'Tiempo_Viaje',
-        'Donde_reside', 'Fuera_comunidad', 'Doble_Nacionalidad', 'Edad'
+        'Donde_reside', 'Fuera_comunidad', 'Edad'
     ];
 
     $data = [];
@@ -41,19 +41,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data[':creado_por'] = PC_ID;
 
     $sql = "INSERT INTO Familiares (
-        id, nucleo_id, Nombre, Nacionalidad, Parentesco, Afinidad, Estado_Civil,
+        id, nucleo_id, Nombre, Parentesco, Afinidad, Estado_Civil,
         Fecha_Nacimiento, Sexo, Embarazada, Atencion_Prenatal, Tipo_Atencion_Prenatal,
         Tiene_Discapacidad, Tipo_Discapacidad, Sabe_Leer, Sabe_Escribir,
-        Escolaridad, Estudia_Actualmente, Razon_Abandono, Actualmente_Labora, Doble_Nacionalidad,
-        Tiene_DPI, Tiene_Certificado_Nacimiento, Tiene_Pasaporte,
+        Escolaridad, Estudia_Actualmente, Razon_Abandono, Actualmente_Labora,
+        Tiene_DPI, Tiene_Certificado_Nacimiento,
         Ingresos_Mensuales, Viajan_Trabajo, Tiempo_Viaje, creado_por, Fuera_comunidad, Donde_reside,
         Desconoce_Fecha, Edad
     ) VALUES (
-        :id, :nucleo_id, :Nombre, :Nacionalidad, :Parentesco, :Afinidad, :Estado_Civil,
+        :id, :nucleo_id, :Nombre, :Parentesco, :Afinidad, :Estado_Civil,
         :Fecha_Nacimiento, :Sexo, :Embarazada, :Atencion_Prenatal, :Tipo_Atencion_Prenatal,
         :Tiene_Discapacidad, :Tipo_Discapacidad, :Sabe_Leer, :Sabe_Escribir,
-        :Escolaridad, :Estudia_Actualmente, :Razon_Abandono, :Actualmente_Labora, :Doble_Nacionalidad,
-        :Tiene_DPI, :Tiene_Certificado_Nacimiento, :Tiene_Pasaporte,
+        :Escolaridad, :Estudia_Actualmente, :Razon_Abandono, :Actualmente_Labora,
+        :Tiene_DPI, :Tiene_Certificado_Nacimiento,
         :Ingresos_Mensuales, :Viajan_Trabajo, :Tiempo_Viaje, :creado_por, :Fuera_comunidad, :Donde_reside,
         :Desconoce_Fecha, :Edad
     )";
